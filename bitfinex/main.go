@@ -13,14 +13,22 @@ import (
 	"time"
 
 	"github.com/nntaoli-project/goex"
-	"github.com/nntaoli-project/goex/binance"
 )
 
 var (
-	beginTime   = time.Date(2017, 1, 1, 0, 0, 0, 0, time.Local) //开始时间2019年8月18日,需自行修改
-	klinePeriod = goex.KLINE_PERIOD_1MIN                        //see: github.com/nntaoli-project/GoEx/Const.go
-	// currencyPair = goex.BTC_USDT
-	// dataDir      = "data/btc"
+	klinePeriod = goex.KLINE_PERIOD_1MIN //see: github.com/nntaoli-project/GoEx/Const.go
+
+	endTime = time.Date(2020, 4, 14, 0, 0, 0, 0, time.Local)
+
+	beginTime = time.Date(2013, 4, 2, 0, 0, 0, 0, time.Local)
+	// 2014.11.23 -2014.12.31 缺少1分时数据
+	// 2015.5.1 -2015.5.30 缺少1分时数据
+	// 2016.4.1-2016.5.30 缺少1分时数据
+	// 2016.8.3-2016.8.9 缺少1分时数据
+
+	// beginTime    = time.Date(2014, 11, 23, 0, 0, 0, 0, time.Local)
+	currencyPair = goex.BTC_USDT
+	dataDir      = "data/btc"
 
 	// currencyPair = goex.ETH_USDT
 	// dataDir      = "data/eth"
@@ -28,10 +36,10 @@ var (
 	// currencyPair = goex.LTC_USDT
 	// dataDir      = "data/ltc"
 
-	currencyPair = goex.BCH_USDT //到了2019.11.28就没了,换交易对名,以前用BCHABC，现在BCH
-	dataDir      = "data/bch"
+	// currencyPair = goex.BCH_USDT
+	// dataDir      = "data/bch"
 
-	// currencyPair = goex.BSV_USDT // 2019.4.22下架了
+	// currencyPair = goex.BSV_USDT
 	// dataDir      = "data/bsv"
 
 	// currencyPair = goex.ETC_USDT
@@ -50,7 +58,7 @@ func init() {
 }
 
 func csvWriter(timestamp int64) *csv.Writer {
-	t := time.Unix(timestamp, 0).Format("2006-01-02")
+	t := time.Unix(timestamp/1000, 0).Format("2006-01-02")
 	p := "1min"
 	switch klinePeriod {
 	case goex.KLINE_PERIOD_1MIN:
@@ -66,7 +74,7 @@ func csvWriter(timestamp int64) *csv.Writer {
 	case goex.KLINE_PERIOD_1DAY:
 		p = "1day"
 	}
-	fileName := fmt.Sprintf("binance_kline_%s_%s_%s.csv", currencyPair.ToLower().ToSymbol(""), p, t)
+	fileName := fmt.Sprintf("bitfinex_kline_%s_%s_%s.csv", currencyPair.ToLower().ToSymbol(""), p, t)
 
 	w := csvWriterM[fileName]
 	if w != nil {
@@ -113,17 +121,14 @@ func main() {
 		log.Println("end")
 	}()
 
-	ba := binance.NewWithConfig(&goex.APIConfig{
-		//HttpClient: http.DefaultClient,
-		HttpClient: &http.Client{
-			Transport: &http.Transport{
-				Proxy: func(request *http.Request) (*url.URL, error) {
-					return url.Parse("socks5://127.0.0.1:1086") //ss proxy
-				},
+	ba := NewBitfinex(&http.Client{
+		Transport: &http.Transport{
+			Proxy: func(request *http.Request) (*url.URL, error) {
+				return url.Parse("socks5://127.0.0.1:1086") //ss proxy
 			},
-			Timeout: 10 * time.Second,
 		},
-	})
+		Timeout: 10 * time.Second,
+	}, "", "")
 
 	since := int(beginTime.Unix()) * 1000
 	interval := time.NewTimer(200 * time.Millisecond)
@@ -133,9 +138,16 @@ func main() {
 		case <-ctx.Done():
 			return
 		case <-interval.C:
-			klines, err := ba.GetKlineRecords(currencyPair, klinePeriod, 1000, since)
+			klines, err := ba.GetKlineRecords(currencyPair, klinePeriod, 1500, since, since+60*60*24*1000-1)
 			if err != nil {
 				log.Println(err)
+				interval.Reset(200 * time.Millisecond)
+				continue
+			}
+
+			if len(klines) == 0 {
+				log.Printf("no klines, jump %s ", time.Unix(int64(since/1000), 0).Format("2006-01-02"))
+				since = since + 60*60*24*1000
 				interval.Reset(200 * time.Millisecond)
 				continue
 			}
@@ -145,8 +157,8 @@ func main() {
 					goex.FloatToString(k.Low, 8), goex.FloatToString(k.Open, 8), goex.FloatToString(k.Close, 8), goex.FloatToString(k.Vol, 8)})
 			}
 
-			since = int(klines[len(klines)-1].Timestamp)*1000 + 1
-			if len(klines) < 1000 {
+			since = int(klines[len(klines)-1].Timestamp) + 1
+			if since > int(endTime.Unix())*1000 {
 				cancel()
 			}
 

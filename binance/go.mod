@@ -1,4 +1,4 @@
-module github.com/nntaoli-project/download_binance_kline_history
+module github.com/yanchenxu/exchanges_candles_history/binance
 
 go 1.12
 
