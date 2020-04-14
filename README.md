@@ -82,5 +82,9 @@ binance and bitfinex candles history
   2016-08-03 - 2016-08-09 缺少 1 分时数据
 
 - eos/ust
+
+  从 2017.7.2 开始
+
 - bch/ust
-- bch/ust
+
+- bcv/ust

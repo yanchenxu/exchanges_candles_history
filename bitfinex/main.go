@@ -34,9 +34,9 @@ var (
 	// 2016.4.01 -2016.5.31 缺少1分时数据
 	// 2016.8.03 -2016.8.9 缺少1分时数据
 
-	beginTime    = time.Date(2014, 1, 25, 0, 0, 0, 0, time.Local)
-	currencyPair = goex.LTC_USDT
-	dataDir      = "data/ltc"
+	// beginTime    = time.Date(2014, 1, 25, 0, 0, 0, 0, time.Local)
+	// currencyPair = goex.LTC_USDT
+	// dataDir      = "data/ltc"
 	// 2013.5.20 -2013.5.21 缺少1分时数据
 	// 2013.6.1
 	// 2013.6.6
@@ -56,6 +56,10 @@ var (
 	// 2016-04-02 - 2016-05-31 缺少1分时数据
 	// 2016-08-03 - 2016-08-09 缺少1分时数据
 
+	beginTime    = time.Date(2017, 7, 2, 0, 0, 0, 0, time.Local)
+	currencyPair = goex.EOS_USDT
+	dataDir      = "data/eos"
+
 	// currencyPair = goex.BCH_USDT
 	// dataDir      = "data/bch"
 
@@ -64,9 +68,6 @@ var (
 
 	// currencyPair = goex.ETC_USDT
 	// dataDir      = "data/etc"
-
-	// currencyPair = goex.EOS_USDT
-	// dataDir      = "data/eos"
 
 	csvWriterM map[string]*csv.Writer
 	fileM      map[string]*os.File
