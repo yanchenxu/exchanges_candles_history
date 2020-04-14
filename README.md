@@ -50,8 +50,15 @@ binance and bitfinex candles history
 
   2016.8.3-2016.8.9 缺少 1 分时数据
 
-- ltc/ust
 - eth/ust
+
+  从 2016-3-10 开始
+
+  2016.4.01 -2016.5.31 缺少 1 分时数据
+
+  2016.8.03 -2016.8.9 缺少 1 分时数据
+
+- ltc/ust
 - eos/ust
 - bch/ust
 - bch/ust

@@ -20,18 +20,19 @@ var (
 
 	endTime = time.Date(2020, 4, 14, 0, 0, 0, 0, time.Local)
 
-	beginTime = time.Date(2013, 4, 2, 0, 0, 0, 0, time.Local)
+	//beginTime = time.Date(2013, 4, 2, 0, 0, 0, 0, time.Local)
+	// currencyPair = goex.BTC_USDT
+	// dataDir      = "data/btc"
 	// 2014.11.23 -2014.12.31 缺少1分时数据
 	// 2015.5.1 -2015.5.30 缺少1分时数据
 	// 2016.4.1-2016.5.30 缺少1分时数据
 	// 2016.8.3-2016.8.9 缺少1分时数据
 
-	// beginTime    = time.Date(2014, 11, 23, 0, 0, 0, 0, time.Local)
-	currencyPair = goex.BTC_USDT
-	dataDir      = "data/btc"
-
-	// currencyPair = goex.ETH_USDT
-	// dataDir      = "data/eth"
+	beginTime    = time.Date(2016, 3, 10, 0, 0, 0, 0, time.Local)
+	currencyPair = goex.ETH_USDT
+	dataDir      = "data/eth"
+	// 2016.4.01 -2016.5.31 缺少1分时数据
+	// 2016.8.03 -2016.8.9 缺少1分时数据
 
 	// currencyPair = goex.LTC_USDT
 	// dataDir      = "data/ltc"
