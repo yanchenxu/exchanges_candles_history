@@ -56,13 +56,15 @@ var (
 	// 2016-04-02 - 2016-05-31 缺少1分时数据
 	// 2016-08-03 - 2016-08-09 缺少1分时数据
 
-	beginTime    = time.Date(2017, 7, 2, 0, 0, 0, 0, time.Local)
-	currencyPair = goex.EOS_USDT
-	dataDir      = "data/eos"
+	// beginTime    = time.Date(2017, 7, 2, 0, 0, 0, 0, time.Local)
+	// currencyPair = goex.EOS_USDT
+	// dataDir      = "data/eos"
 
-	// currencyPair = goex.BCH_USDT
-	// dataDir      = "data/bch"
+	beginTime    = time.Date(2017, 8, 2, 0, 0, 0, 0, time.Local)
+	currencyPair = goex.BCH_USDT
+	dataDir      = "data/bch"
 
+	// beginTime    = time.Date(2018, 11, 13, 0, 0, 0, 0, time.Local)
 	// currencyPair = goex.BSV_USDT
 	// dataDir      = "data/bsv"
 

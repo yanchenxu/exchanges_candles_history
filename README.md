@@ -87,4 +87,6 @@ binance and bitfinex candles history
 
 - bch/ust
 
+  从 2018.11.13 开始
+
 - bcv/ust
