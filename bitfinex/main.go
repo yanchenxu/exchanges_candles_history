@@ -60,16 +60,17 @@ var (
 	// currencyPair = goex.EOS_USDT
 	// dataDir      = "data/eos"
 
-	beginTime    = time.Date(2017, 8, 2, 0, 0, 0, 0, time.Local)
-	currencyPair = goex.BCH_USDT
-	dataDir      = "data/bch"
+	// beginTime    = time.Date(2017, 8, 2, 0, 0, 0, 0, time.Local)
+	// currencyPair = goex.BCH_USDT
+	// dataDir      = "data/bch"
 
 	// beginTime    = time.Date(2018, 11, 13, 0, 0, 0, 0, time.Local)
 	// currencyPair = goex.BSV_USDT
 	// dataDir      = "data/bsv"
 
-	// currencyPair = goex.ETC_USDT
-	// dataDir      = "data/etc"
+	beginTime    = time.Date(2016, 7, 27, 0, 0, 0, 0, time.Local)
+	currencyPair = goex.ETC_USDT
+	dataDir      = "data/etc"
 
 	csvWriterM map[string]*csv.Writer
 	fileM      map[string]*os.File

@@ -87,6 +87,12 @@ binance and bitfinex candles history
 
 - bch/ust
 
-  从 2018.11.13 开始
+  从 2017.8.2 开始到 2018-11-16 为止，后面的 k 线不知道什么原因获取不到了，有时间再找问题吧
 
 - bcv/ust
+
+  从 2018.11.13 开始
+
+* etc/ust
+
+  从 2016.7.27 开始
